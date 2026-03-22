@@ -1,5 +1,5 @@
 {
-  "name": "1688-image-grabber",
+  "name": "ecom-image-grabber",
   "version": "1.0.0",
   "description": "Chrome extension to grab and download product images from e-commerce sites",
   "author": "Your Name",
@@ -18,9 +18,6 @@
   "keywords": [
     "chrome-extension",
     "image-grabber",
-    "1688",
-    "alibaba",
-    "aliexpress",
-    "dhgate"
+    "ecommerce"
   ]
 }

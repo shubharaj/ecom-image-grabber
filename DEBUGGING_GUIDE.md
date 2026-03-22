@@ -16,31 +16,22 @@ This error means the sidebar's message is not reaching the content script. Possi
 ## Debug Steps (Follow in Order)
 
 ### Step 1: Verify Manifest Support
-Check which URLs you're testing:
-- **1688.com variants**: detail.1688.com, search.1688.com, trade.1688.com
-- **Others**: Similar subdomain variations
+The extension now works on **all websites** using `<all_urls>` in the manifest.
 
-✅ **Required pattern support**: The manifest should match these patterns:
+✅ **Manifest is configured** to work on:
 ```
-*://1688.com/*
-*://*.1688.com/*
-*://alibaba.com/*
-*://*.alibaba.com/*
-*://aliexpress.com/*
-*://*.aliexpress.com/*
-*://dhgate.com/*
-*://*.dhgate.com/*
+<all_urls>
 ```
 
 ### Step 2: Check Extension Installation
 1. Go to `chrome://extensions`
-2. Find "Product Image Grabber" extension
+2. Find "Image Grabber" extension
 3. Make sure it's **enabled** (blue toggle on right)
 4. Look for any warnings or "Errors" button - click it if present
 5. Note the extension **ID** (you'll need it for next steps)
 
 ### Step 3: Verify Content Script Injection
-1. Open a product page: `https://detail.1688.com/product/1234567890`
+1. Open any website with images
 2. Open Developer Tools: Press **F12**
 3. Click on **Console** tab
 4. Look for messages starting with `[Image Grabber]`:
@@ -72,7 +63,7 @@ If you see these messages, the content script is injected. Skip to Step 5.
    - ✅ `[Sidebar] Received images: X` (where X is a number)
 
 If images appear: **Initial load works ✓**
-If not: The extension is not properly set up on this site.
+If not: The extension may not be properly injected on this page.
 
 ### Step 6: Test Rescan on Same URL
 1. In the same sidebar, scroll down and click **🔄 Rescan for Images**
@@ -84,9 +75,7 @@ If not: The extension is not properly set up on this site.
 If this works: **Same-URL rescan works ✓**
 
 ### Step 7: Test Rescan After Navigation (The Bug)
-1. With images still displayed in sidebar, navigate to a DIFFERENT product on the same site
-   - Example: Go to `https://search.1688.com/...` (different subdomain)
-   - Or change the product ID in the URL
+1. With images still displayed in sidebar, navigate to a different page
 2. The sidebar should still be open
 3. Click **🔄 Rescan for Images**
 4. Check what happens:
@@ -117,13 +106,12 @@ This happens when navigating between different subdomains or when a page doesn't
 4. Reload all open product pages (F5)
 5. Try again
 
-**Fix Option 2 - Use Different URLs on Same Subdomain:**
-- Instead of navigating between search.1688.com and detail.1688.com
-- Try: detail.1688.com/product/111 → detail.1688.com/product/222
-- Same subdomain might prevent uninjection
+**Fix Option 2 - Navigate Within Same Domain:**
+- Try navigating to different pages within the same domain
+- Different subdomains may cause content script uninjection
 
-**Fix Option 3 - Check Manifest Patterns:**
-If you're testing with a URL pattern not listed in Step 1, it won't work because the manifest doesn't match.
+**Fix Option 3 - Check if URL Pattern Matches:**
+The manifest uses `<all_urls>` so it should work on all websites.
 
 ### Solution B: Message Listener Crashed
 If you see `[Image Grabber]` messages but then errors:
@@ -180,8 +168,8 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
    - Screenshots of console errors
    - Manifest content from chrome://extensions Details
 
-2. **Test on Different Site:**
-   - Try with another supported site (Alibaba, AliExpress, DHgate)
+2. **Test on Different Sites:**
+   - Try various websites (news, galleries, shopping sites, etc.)
    - Determines if it's site-specific
 
 3. **Check Recent Chrome Updates:**

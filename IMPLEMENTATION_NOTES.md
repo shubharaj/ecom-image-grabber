@@ -5,10 +5,10 @@
 ### Files Created:
 1. **manifest.json** — Chrome extension v3 config with:
    - Sidebar panel permission and setup
-   - Content script for 1688/Alibaba/AliExpress/DHgate
+   - Content script for all websites
    - Background service worker
    - Downloads API permission
-   - Host permissions for all 4 sites
+   - Host permissions for all URLs
 
 2. **Sidebar UI** (src/sidebar/):
    - `index.html` — Responsive image grid layout with controls
@@ -16,8 +16,8 @@
    - `styles.css` — Modern gradient header, image preview grid, responsive design
 
 3. **Content Script** (src/content.js):
-   - Page scanning for product images
-   - Site detection (1688/Alibaba/AliExpress/DHgate)
+   - Universal page scanning for images
+   - Image detection and filtering
    - Image filtering to exclude logos/UI elements
    - Size-based filtering (≥80×80 px)
    - Duplicate detection and URL normalization
@@ -31,7 +31,7 @@
 ### Project Structure:
 ```
 src/
-├── content.js                    ✅ Page scanning & image detection
+├── content.js                    ✅ Universal page scanning & image detection
 ├── background.js                 ✅ Sidebar trigger & housekeeping
 ├── sidebar/
 │   ├── index.html               ✅ Image grid with checkboxes
@@ -40,26 +40,20 @@ src/
 ├── utils/
 │   ├── imageDetector.js          ✅ Heuristic-based detection
 │   └── downloadManager.js        ✅ Download & ZIP orchestration
-├── adapters/
-│   ├── index.js                  ✅ Adapter registry
-│   ├── 1688.js                   ✅ 1688-specific selectors
-│   ├── alibaba.js                ✅ Alibaba-specific selectors
-│   ├── aliexpress.js             ✅ AliExpress-specific selectors
-│   └── dhgate.js                 ✅ DHgate-specific selectors
 ├── manifest.json                 ✅ v3 config with sidebar
 └── package.json                  ✅ Dependencies & scripts
 ```
 
 ## 📋 Completed Features:
 
-✅ **Multi-site support**: 1688, Alibaba, AliExpress, DHgate  
+✅ **Universal website support**: Works on any website  
 ✅ **Smart image detection**: Heuristic-based with size/class/context filtering  
 ✅ **Manual selection**: Click checkboxes to select individual images  
 ✅ **Grab All mode**: Toggle to auto-select all detected images  
 ✅ **Sidebar UI**: Responsive image grid with real-time preview  
 ✅ **Dual download formats**: Individual files or ZIP archive  
 ✅ **Progress tracking**: Progress bar with percentage display  
-✅ **Filename generation**: Based on alt text with fallback to auto-generated names  
+✅ **Filename generation**: Smart naming with fallback to auto-generated names  
 ✅ **Error handling**: User-friendly error messages  
 ✅ **CSS grid layout**: Modern UI with gradient header and smooth transitions  
 
@@ -67,12 +61,12 @@ src/
 
 ### Phase 3: Testing & Polish
 1. **Install extension locally** in Chrome (`chrome://extensions` → Load unpacked)
-2. **Test on actual product pages**:
-   - Test 1688 (1688.com) product page
-   - Test Alibaba product page
-   - Test AliExpress product page
-   - Test DHgate product page
-3. **Verify image detection** accuracy (should find 20+ images on typical product page)
+2. **Test on various websites**:
+   - E-commerce sites (Amazon, eBay, Shopify stores)
+   - News and magazine sites
+   - Photo galleries and portfolios
+   - Social media photo sections
+3. **Verify image detection** accuracy (should find 20+ images on typical page)
 4. **Test user workflows**:
    - Manual selection: click 3 images, verify download
    - Grab All mode: toggle on, verify all auto-selected
@@ -91,10 +85,10 @@ src/
 1. **Save the project** (already done)
 2. **Open Chrome** → Type `chrome://extensions`
 3. **Enable "Developer mode"** (top right toggle)
-4. **Click "Load unpacked"** → Select `/private/var/www/1688-image-grabber`
+4. **Click "Load unpacked"** → Select `/private/var/www/image-grabber`
 5. **Extension appears** in your toolbar
-6. **Test**: Go to a 1688/Alibaba product page, click extension icon
-7. **Sidebar opens** with detected product images
+6. **Test**: Go to any website with images, click extension icon
+7. **Sidebar opens** with detected images
 
 ## 💡 Key Implementation Details
 
@@ -122,8 +116,8 @@ src/
 
 ### manifest.json
 - Chrome v3 format with sidebar support
-- Host permissions for all 4 e-commerce sites (can be expanded)
-- Content scripts auto-inject on product pages
+- Host permissions for all URLs (<all_urls>)
+- Content scripts auto-inject on all pages
 - Service worker manages background tasks
 
 ### package.json
@@ -133,10 +127,10 @@ src/
 
 ## ⚠️ Current Limitations
 
-1. **Icons**: Placeholder assets/icon-*.png files are referenced but not created (Chrome will use default icon)
-2. **CORS**: Some image CDNs may block cross-origin requests; extension handles gracefully with fallbacks
-3. **Dynamic content**: Images loaded after page load will be detected if DOM is stable; watches for mutations
-4. **No persistence**: Downloaded files not tracked in extension storage (can be added later)
+1. **CORS**: Some image CDNs may block cross-origin requests; extension handles gracefully with fallbacks
+2. **Dynamic content**: Images loaded after page load will be detected if DOM is stable; watches for mutations
+3. **No persistence**: Downloaded files not tracked in extension storage (can be added later)
+4. **Lazy loading**: Some sites may load images on scroll; extension provides rescan button to catch them
 
 ## 🔧 Tools Used
 
@@ -148,4 +142,4 @@ src/
 
 ---
 
-**Status**: ✅ Ready for testing! Install in Chrome and try on a 1688/Alibaba/AliExpress/DHgate product page.
+**Status**: ✅ Ready for testing! Install in Chrome and try on any website with images.
