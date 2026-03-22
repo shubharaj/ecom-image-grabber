@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Grabber</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>Product Images</h1>
+      <div class="controls">
+        <label class="toggle-control">
+          <input type="checkbox" id="grabAllToggle" />
+          <span class="toggle-label">Grab All</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Filter and Sort -->
+    <div class="filter-bar">
+      <button id="selectAllBtn" class="btn btn-secondary">Select All</button>
+      <button id="selectNoneBtn" class="btn btn-secondary">Clear</button>
+      <span class="count" id="selectedCount">0 selected</span>
+    </div>
+
+    <!-- Images Grid -->
+    <div id="imageContainer" class="image-grid">
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>Scanning for product images...</p>
+      </div>
+    </div>
+
+    <!-- Download Options -->
+    <div class="download-panel">
+      <div class="format-selector">
+        <label>
+          <input type="radio" name="downloadFormat" value="individual" checked />
+          Download Individual Files
+        </label>
+        <label>
+          <input type="radio" name="downloadFormat" value="zip" />
+          Download as ZIP
+        </label>
+      </div>
+      <button id="downloadBtn" class="btn btn-primary" disabled>
+        Download Selected
+      </button>
+      <div id="progressBar" class="progress-bar" style="display: none;">
+        <div class="progress-fill"></div>
+        <span class="progress-text">0%</span>
+      </div>
+      <div id="statusText" class="status-text"></div>
+      <button id="rescanBtn" class="btn btn-secondary" style="width: 100%; margin-top: 12px;">
+        🔄 Rescan for Images
+      </button>
+    </div>
+  </div>
+
+  <script src="sidebar.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "1688-image-grabber",
+  "version": "1.0.0",
+  "description": "Chrome extension to grab and download product images from e-commerce sites",
+  "author": "Your Name",
+  "license": "MIT",
+  "scripts": {
+    "dev": "web-ext run -s . --keep-profile-changes",
+    "build": "web-ext build -s . -a build/",
+    "lint": "eslint src/",
+    "test": "echo \"No tests yet\""
+  },
+  "devDependencies": {
+    "web-ext": "^7.6.0",
+    "eslint": "^8.50.0"
+  },
+  "dependencies": {},
+  "keywords": [
+    "chrome-extension",
+    "image-grabber",
+    "1688",
+    "alibaba",
+    "aliexpress",
+    "dhgate"
+  ]
+}
